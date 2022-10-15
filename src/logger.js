@@ -5,12 +5,7 @@ let printSomething = function() {
     return "done"
 }
 
-let Welcome = function(){
-    console.log("Welcome to my application. I am Ashish Ingle and a part of FunctionUp Plutonium cohort.")
-}
-
 
 let abc = 2022
 module.exports.myUrl = url
 module.exports.myFunction = printSomething
-module.exports.myWelcome = welcome
