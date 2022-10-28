@@ -35,23 +35,7 @@ const twostatesdata = async function(req,res){
 
 
 
-
-
-
-
-
-    const getbook50100 = async function(req,res){
-        const bookDetails = await BookModel.findOneAndUpdate({name:"Two states"},{$set:{price:100, age:24}}, {new:true})
-        
-        const autotrId = bookDetails.author_id
-        
-        const author = await AuthorModel.findOne({author_id: autotrId })
-        
-        res.send({authorName: author.author_name, price: bookDetails.price})
-        
-        }
-
-        const getRangePrice_author = async function (req, res) {
+        const getbook50100 = async function (req, res) {
             const book = await BookModel.find({ price: { $gt: 49, $lt: 101 } }).select({ price: 1,name:1, author_id: 1, _id: 0 })
             const a=book.map(x=>x.author_id)
             const author=await AuthorModel.find({author_id:a}).select({author_name:1,author_id:1,_id:0})
@@ -69,7 +53,7 @@ const twostatesdata = async function(req,res){
             res.send(myData)
         }
 
-    module.exports.getRangePrice_author = getRangePrice_author
+
     module.exports.createBook= createBook
     module.exports.createAuthor= createAuthor
     module.exports.twostatesdata =twostatesdata

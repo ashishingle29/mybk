@@ -25,7 +25,7 @@ router.get("/chetanbhagatbyid", BookController.chetanbhagatbyid)
 
 router.get('/twostatesdata', BookController.twostatesdata)
 
-router.get('/getbook50100', BookController.getRangePrice_author)
+router.get('/getbook50100', BookController.getbook50100)
 
 
 module.exports = router;
