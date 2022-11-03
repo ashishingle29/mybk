@@ -2,8 +2,9 @@ const jwt = require("jsonwebtoken");
 
 
 const verifytoken = async function (req, res, next) {
-    let header = req.headers["x-auth-token"]
 
+    let header = req.headers["x-auth-token"]
+        try{
     if (!header) {
         res.send({
             status: false,
@@ -17,6 +18,9 @@ const verifytoken = async function (req, res, next) {
         } else {
             next()
         }
+    }
+    }catch(error){
+        res.status(500).send({msg:"somthing is wrong"})
     }
 }
 
