@@ -8,11 +8,19 @@ const userSchema = new mongoose.Schema( {
 
         required: true
     },
-    emailId: String,
+    emailId: {
+        type: String,
+
+        required: true
+    },
     password: String,
     gender: {
         type: String,
         enum: ["male", "female", "other"]
+    },
+    isDeleted : {
+        type: Boolean,
+        default: false
     },
     age: Number,
 }, { timestamps: true });

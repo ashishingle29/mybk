@@ -92,7 +92,65 @@ const updateUser = async function (req, res) {
   res.send({ status: updatedUser, data: updatedUser });
 };
 
+
+
+
+
+const user = async function (req, res) {
+  let data = req.body;
+  let savadata = await userModel.create(data);
+  res.send({ msg: savadata });
+}
+
+
+const login = async function (req, res) {
+  let email = req.body.emailId
+  let password = req.body.password
+  let checkdata = await userModel.findOne({ emailId: email, password: password });
+  if (!checkdata) {
+    res.send({
+      status: false,
+      msg: "username or the password is Invalid",
+    })
+  }
+  else {
+    let gToken = jwt.sign({ emailId: email, password: password }, "Hello i Am Ashish")
+    res.send({ Status: "You have Successful LoggedIn", Tocken: gToken })
+  }
+}
+
+
+const getData = async function (req, res) {
+        let userId = req.params.userId
+      let data = await userModel.findById(userId)
+      res.send({ Status: "The Token is Valid", UserData: data })
+    } 
+  
+const updatedata = async function(req,res){  
+  let userId = req.params.userId
+  let data = req.body
+  let update = await userModel.findByIdAndUpdate(userId, data, {new:true});
+  res.send(update)
+  }
+
+const deleteData = async function(req,res){
+  let userId = req.params.userId
+  let update = await userModel.findByIdAndUpdate(userId, {isDeleted: true}, {new:true})
+  res.send(update)
+
+}
+
+
+
+
+module.exports.deleteData = deleteData;
+module.exports.updatedata = updatedata;
+module.exports.getData = getData;
+module.exports.login = login;
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
+module.exports.user = user;
+
+
