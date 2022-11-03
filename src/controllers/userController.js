@@ -95,14 +95,14 @@ const updateUser = async function (req, res) {
 
 
 
-
+// Assignment NO 1
 const user = async function (req, res) {
   let data = req.body;
   let savadata = await userModel.create(data);
   res.send({ msg: savadata });
 }
 
-
+// Assignment No 2
 const login = async function (req, res) {
   let email = req.body.emailId
   let password = req.body.password
@@ -119,13 +119,15 @@ const login = async function (req, res) {
   }
 }
 
-
+// Assignment No 3
 const getData = async function (req, res) {
         let userId = req.params.userId
       let data = await userModel.findById(userId)
       res.send({ Status: "The Token is Valid", UserData: data })
     } 
   
+
+    // Assignment No 4
 const updatedata = async function(req,res){  
   let userId = req.params.userId
   let data = req.body
@@ -133,6 +135,8 @@ const updatedata = async function(req,res){
   res.send(update)
   }
 
+
+  // Assignment No 5
 const deleteData = async function(req,res){
   let userId = req.params.userId
   let update = await userModel.findByIdAndUpdate(userId, {isDeleted: true}, {new:true})
