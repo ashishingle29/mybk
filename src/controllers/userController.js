@@ -11,7 +11,7 @@ const createUser = async function (abcd, xyz) {
   xyz.send({ msg: savedData });
 };
 
-const loginUser = async function (req, res) {
+const loginUser1 = async function (req, res) {
   let userName = req.body.emailId;
   let password = req.body.password;
 
@@ -40,7 +40,7 @@ const loginUser = async function (req, res) {
   res.send({ status: true, data: token });
 };
 
-const getUserData = async function (req, res) {
+const getUserData1 = async function (req, res) {
   let token = req.headers["x-Auth-token"];
   if (!token) token = req.headers["x-auth-token"];
 
@@ -115,8 +115,53 @@ const postMessage = async function (req, res) {
     return res.send({status: true, data: updatedUser})
 }
 
+
+
+const registeruser = async function(req,res){
+  let Userdata = req.body
+  let regdata = await userModel.create(Userdata)
+  res.send({"New User Data" : regdata}) 
+}
+
+
+const loginUser  = async function(req,res){
+  let emailId  = req.body.emailId
+  let password = req.body.password
+  let checkData = await userModel.findOne({emailId: emailId, password:password});
+  if(!checkData){
+    res.send({Status: false, Msg : "Email and Password is Not Valid Please enter Valid Details"});
+
+  }else{
+    let GToken = jwt.sign({emailId:emailId, password:password}, "Hello I am Ashish")
+    res.send({Status: true, Msg : "Email and Password is Valid & Now you LoggedIn", GToken});
+  }
+
+}
+
+
+const getUserData = async function(req,res){
+  let givenId = req.params.userId
+  let checkData = await userModel.findOne({userId : givenId})
+  res.send({status: true, "User Data" :checkData}) 
+}
+
+
+
+
+
+
+
+const deleteUser = async function(req,res){
+  let Userdata = req.body
+  let regdata = await userModel.create(Userdata)
+  res.send({"New User Data" : regdata}) 
+}
+
+
+module.exports.registeruser = registeruser;
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
-module.exports.postMessage = postMessage
+module.exports.postMessage = postMessage;
+module.exports.deleteUser = deleteUser;
