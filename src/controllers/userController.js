@@ -8,7 +8,7 @@ const createUser = async function (req, res) {
   let saveData = await userModel.create(data)
   res.status(201).send({ msg: saveData })
     }catch (error) {
-        return res.status(500).send({ msg: "SERVER ISSUE" })
+        return res.status(500).send({ msg: "SERVER ISSUE", ErrorType: error.message })
     
       }
 }
@@ -33,7 +33,7 @@ const loginUser = async function (req, res) {
     res.status(200).send({ status: "You have Successful LoggedIn", token: token })
   }
 } catch (error) {
-    return res.status(500).send({ msg: "SERVER ISSUE" })
+    return res.status(500).send({ msg: "SERVER ISSUE", ErrorType: error.message })
 
   }
 
@@ -46,7 +46,7 @@ const getUserData = async function (req, res) {
   let data = await userModel.findById(userId)
   res.status(200).send({ Status: "The Token is Valid", UserData: data })
 }catch (error) {
-    return res.status(500).send({ msg: "SERVER ISSUE" })
+    return res.status(500).send({ msg: "SERVER ISSUE", ErrorType: error.message })
 
   }
 }
@@ -71,7 +71,7 @@ const updatedata = async function (req, res) {
     }, { new: true });
   res.send(update)
 }catch (error) {
-    return res.status(500).send({ msg: "SERVER ISSUE" })
+    return res.status(500).send({ msg: "SERVER ISSUE", ErrorType: error.message })
 
   }
 }
@@ -86,7 +86,7 @@ const deleteData = async function (req, res) {
   let update = await userModel.findByIdAndUpdate({ _id: userId }, {isDeleted:true}, { new: true })
   res.status(200).send({status: true, data: update})
 }catch (error) {
-    return res.status(500).send({ msg: "SERVER ISSUE" })
+    return res.status(500).send({ msg: "SERVER ISSUE", ErrorType: error.message})
 
   }
 }
