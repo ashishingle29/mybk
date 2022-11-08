@@ -1,26 +1,43 @@
+const jwt = require("jsonwebtoken")
 
-const mid1= function ( req, res, next) {
-    req.falana= "hi there. i am adding something new to the req object"
-    console.log("Hi I am a middleware named Mid1")
+const Authentication = function(req, res, next){
+    try{
+    let token = req.headers["x-auth-token"]
+    if(!token){
+        return res.ststus(401).send("Header is not avilable")
+    }
+    
+    let decode = jwt.verify(token, "Hello")
+    if(!decode){
+        return res.ststus(403).send("invalid Token")
+    }
     next()
+}catch (error) {
+    return res.status(500).send({ msg: "SERVER ISSUE" })
+
+  }
 }
 
-const mid2= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid2")
+const authorization = function(req, res, next){
+    try{
+    let token = req.headers["x-auth-token"]
+    if(!token){
+        return res.status(403).send("Header is not avilable")
+    }
+    
+    let decode = jwt.verify(token, "Hello")
+    if(!decode){
+        return res.status(401).send("invalid Token")
+    }
+    let usertobe = req.params.userId
+    let userlogin = decode.Id
+    if(usertobe != userlogin){
+        res.status(403).send({msg: "Its Not your Id"})
+    }
     next()
-}
+}catch (error) {
+    return res.status(500).send({ msg: "SERVER ISSUE" })
 
-const mid3= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid3")
-    next()
+  }
 }
-
-const mid4= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid4")
-    next()
-}
-
-module.exports.mid1= mid1
-module.exports.mid2= mid2
-module.exports.mid3= mid3
-module.exports.mid4= mid4
+module.exports ={Authentication, authorization}
