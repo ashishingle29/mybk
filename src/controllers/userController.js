@@ -13,12 +13,13 @@ const loginApi = async function(req, res){
     let pass = req.body.password
     let user = await userModel.findOne({emailId:email, password: pass})
     if(!user){res.send("Login Failed")}
-    else{
-        let token = jwt.sign({userId:user._id, email:user.emailId}, "aman prajapat")
-        res.setHeader('token', token)
+   
+        let token = jwt.sign({emailId:user.emailId, password:user.password, userId:user.userId }, "Hello i Am Ashish")
+        res.setHeader('x-auth-token', token)
         res.send({status: true, token:token})
-    }
+    
 }
+
 
 const fetchUser = async function(req, res){
     let userId = req.params.userId
@@ -38,5 +39,8 @@ const deleteUser = async function(req, res){
     let result = await userModel.findByIdAndUpdate(userId, {$set:{isDeleted:true}}, {new:true})
     res.send(result)
 }
-module.exports = {resisterApi, loginApi, fetchUser, deleteUser}
+
+
+module.exports = {resisterApi, loginApi, deleteUser}
 module.exports.updateUser = updateUser
+module.exports.fetchUser = fetchUser

@@ -6,11 +6,12 @@ const middleware = require("../middleware/auth")
 router.post("/users", controller.resisterApi)
 router.post("/login", controller.loginApi)
 
-router.get("/users/:userId", middleware.loginCheck, middleware.autherisation, controller.fetchUser)
+router.get("/users/:userId", middleware.loginCheck, controller.fetchUser)
 
-router.put("/users/:userId", middleware.loginCheck, middleware.autherisation, controller.updateUser)
+router.put("/users/:userId", middleware.autherisation, controller.updateUser)
 
-router.delete("/users/:userId", middleware.loginCheck, middleware.autherisation, controller.deleteUser)
+router.delete("/users/:userId", middleware.autherisation, controller.deleteUser)
+
 
 
 
