@@ -1,10 +1,14 @@
-const productModel = require('../models/productModel')
+const productModel = require("../models/productModel")
 
+const createProduct = async function (req, res){
+ const {name, category, price} = req.body
 
-const createproduct = async function (req, res){
-    data = req.boy
-    let productdata = await productModel.create(data)
-    res.send({massage: productdata})
-    }
-    
-    module.exports.createproduct= createproduct
+ //required fields validation
+ if(!name|| !category || !price){
+    return res.send({msg:"all fields name, category and price are mandatory field"})
+}
+ let productDetails = await productModel.create({name, category, price})
+ return res.send({msg: productDetails})
+}
+
+module.exports.createProduct = createProduct
